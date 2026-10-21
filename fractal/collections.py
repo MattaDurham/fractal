@@ -15,7 +15,7 @@ def decoded(value):return os.fsdecode(value)
 
 class Collection:
  def __init__(self,record,state):
-  self.record=record;self.state=Path(state);self.root=Path(record['path']);self.home=self.state/'collections'/record['id'];self.db=self.home/'inventory.sqlite'
+  self.record=record;self.state=Path(state).expanduser().resolve();self.root=Path(record['path']);self.home=self.state/'collections'/record['id'];self.db=self.home/'inventory.sqlite'
   self.progress={'state':'idle','files':0,'directories':0,'bytes':0,'errors':0};self.scan_guard=threading.Lock();self.cancel=threading.Event()
   with write_lock(self.state):
    self.home.mkdir(parents=True,exist_ok=True)
@@ -142,7 +142,7 @@ class Collection:
 
 class Library:
  def __init__(self,state):
-  self.state=Path(state);self.path=self.state/'collections.json';self.loaded={};self.guard=threading.RLock()
+  self.state=Path(state).expanduser().resolve();self.path=self.state/'collections.json';self.loaded={};self.guard=threading.RLock()
   with write_lock(self.state):
    if not self.path.exists():atomic_json(self.path,{'version':1,'collections':[]})
  def records(self):return json.loads(self.path.read_text())['collections']

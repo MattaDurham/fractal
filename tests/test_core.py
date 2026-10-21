@@ -30,7 +30,7 @@ class Fixtures(unittest.TestCase):
  def test_hidden_files_are_an_explicit_option(self):
   self.add('.hidden/a.txt');self.add('shown.txt');self.assertEqual(self.opened().progress['files'],1);self.assertEqual(self.opened(True).progress['files'],2)
  def test_saved_collection_reopens_without_source_copy(self):
-  self.add('one.txt');c=self.opened();again=Library(self.state).get(c.record['id']);self.assertEqual(again.record['path'],str(self.root));self.assertEqual(again.node('f:1')['files'],1);self.assertFalse((self.root/'inventory.sqlite').exists())
+  self.add('one.txt');c=self.opened();again=Library(self.state).get(c.record['id']);self.assertEqual(again.record['path'],str(self.root.resolve()));self.assertEqual(again.node('f:1')['files'],1);self.assertFalse((self.root/'inventory.sqlite').exists())
  def test_refresh_preserves_ids_and_removes_missing_paths(self):
   self.add('keep.txt');gone=self.add('gone.txt');c=self.opened();old=c.search('keep')[0]['id'];gone.unlink();self.add('new.txt');c.scan()
   deadline=time.monotonic()+10
@@ -63,6 +63,12 @@ class Fixtures(unittest.TestCase):
   self.assertEqual(a.search('Alpha')[0]['originalId'],b.search('Beta')[0]['originalId']);self.assertEqual(a.node('f:2')['label'],'Alpha.txt');self.assertEqual(b.node('f:2')['label'],'Beta.txt')
  def test_own_private_state_cannot_be_selected(self):
   with self.assertRaises(ValueError):self.library.open(self.state)
+ def test_private_state_alias_is_canonicalized(self):
+  alias=self.home/'state-alias'
+  try:alias.symlink_to(self.state,target_is_directory=True)
+  except OSError:self.skipTest('Symlink privilege unavailable')
+  library=Library(alias)
+  with self.assertRaises(ValueError):library.open(self.state)
  def test_forgetting_collection_does_not_delete_source(self):
   p=self.add('keep.txt');c=self.opened();self.library.forget(c.record['id']);self.assertEqual(self.library.list(),[]);self.assertTrue(p.exists())
  def test_preview_fingerprint_changes_when_source_changes(self):
