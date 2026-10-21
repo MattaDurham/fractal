@@ -1,0 +1,15 @@
+{
+  "package": "openseadragon",
+  "version": "6.1.1",
+  "repository": {
+    "url": "git+https://github.com/openseadragon/openseadragon.git",
+    "type": "git"
+  },
+  "license": "BSD-3-Clause",
+  "archive_url": "https://registry.npmjs.org/openseadragon/-/openseadragon-6.1.1.tgz",
+  "verified_integrity": "sha512-g4iKe2q8B642SaBT3+x4ZF3/8b1TxPPydyjmtrOLgDrlYWMKd9ZXM+1Cb/xa9DVySkvs/7l6HR1nHKfD5F3Tsw==",
+  "files": {
+    "openseadragon.min.js": "14d587cd3ee7c4861f1a41077ce642029364a21029956ba635bd8fb1202cf9ad",
+    "OpenSeadragon-LICENSE.txt": "17da96b26ac706d2cbd06d4555dedb43026782f4943faf0156fe7acf89454228"
+  }
+}

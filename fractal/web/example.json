@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "label": "A small library",
+  "folders": {
+    "id": "root",
+    "label": "A small library",
+    "kind": "directory",
+    "children": [
+      {
+        "id": "notes",
+        "label": "Field notes",
+        "kind": "directory",
+        "children": [
+          {
+            "id": "idea",
+            "label": "An idea.md",
+            "kind": "file",
+            "bytes": 420,
+            "description": "A synthetic note for exploring a collection.",
+            "topic": "Questions"
+          },
+          {
+            "id": "plan",
+            "label": "A small plan.txt",
+            "kind": "file",
+            "bytes": 280,
+            "description": "A synthetic plan.",
+            "topic": "Projects"
+          }
+        ]
+      }
+    ]
+  }
+}

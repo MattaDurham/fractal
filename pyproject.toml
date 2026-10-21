@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fractal-folders"
+version = "0.1.0"
+description = "A local, zoomable landscape of your folders and documents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Matt Durham"}]
+dependencies = ["Pillow>=11.3,<14", "pypdfium2>=5.14,<6"]
+keywords = ["folders", "visualization", "semantic-zoom", "local-first"]
+classifiers = ["Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Operating System :: OS Independent"]
+
+[project.scripts]
+fractal = "fractal.__main__:main"
+
+[project.urls]
+Repository = "https://github.com/MattaDurham/fractal"
+Issues = "https://github.com/MattaDurham/fractal/issues"
+
+[tool.setuptools.packages.find]
+include = ["fractal"]
+
+[tool.setuptools.package-data]
+fractal = ["web/*.html", "web/*.js", "web/*.css", "web/*.json", "web/vendor/*", "native/*.swift"]

@@ -1,0 +1,4 @@
+include README.md LICENSE THIRD_PARTY.md start.command
+recursive-include docs *.md *.json *.png
+recursive-include fractal/web *.html *.js *.css *.json *.txt
+recursive-include fractal/native *.swift

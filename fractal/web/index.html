@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fractal · Your folders, unfolding.</title>
+  <meta name="description" content="A local, zoomable view of your folders.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/previews.css"><link rel="stylesheet" href="/collections.css">
+  <script defer src="/vendor/openseadragon.min.js"></script><script defer src="/layout.js"></script><script defer src="/dataset.js"></script><script defer src="/collections.js"></script><script defer src="/previews.js"></script><script defer src="/app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="identity"><span class="mark" aria-hidden="true">✳</span><div><p class="eyebrow">FRACTAL <span> / </span> <span id="dataset-name">YOUR FOLDERS</span></p><h1>A landscape of what’s here.</h1></div></div>
+    <div class="header-actions"><button id="dataset-button">Choose folder ↗</button><button id="about-button" aria-expanded="false">How to explore <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <div class="toolbar">
+    <div class="segmented" role="group" aria-label="Organization"><button data-view="content" aria-pressed="true">By type</button><button data-view="folders" aria-pressed="false">Folders</button></div>
+    <span class="toolbar-note" id="view-note">The selected folder. Source files stay unchanged.</span>
+    <button id="refresh-folder" aria-label="Rescan folder" title="Rescan folder">↻</button>
+    <button id="tables-button" aria-pressed="true" title="At file level, lay out actual previews as document tables">Document tables</button>
+    <form id="search-form" role="search"><label class="sr-only" for="search">Search names and paths</label><input id="search" type="search" placeholder="Find a file or /path" autocomplete="off"><button aria-label="Search">↗</button></form>
+  </div>
+  <main>
+    <section class="field" aria-label="Zoomable drive map">
+      <nav id="breadcrumbs" aria-label="Map location"><button id="home-crumb">Your folders</button></nav>
+      <div id="board" tabindex="0" role="application" aria-label="Drive map. Scroll to zoom, drag to pan. Plus and minus zoom, arrow keys pan, Enter opens selection, Escape goes up. An equivalent list is in Browse this level.">
+        <svg id="vector" aria-hidden="true"><g id="world"></g></svg><canvas id="paper-layer" aria-hidden="true"></canvas>
+        <div id="map-message" role="status">Choose a folder to begin.</div>
+        <noscript>Fractal needs JavaScript to explore folders. It runs on this computer.</noscript>
+      </div>
+      <div class="field-topline"><span id="scope">FOLDERS</span><span id="file-total">—</span></div>
+      <div class="field-foot"><div><span class="live-dot" aria-hidden="true"></span><span id="zoom-instruction">Scroll into a word. More will appear.</span></div><button id="fit-button" title="Fit this level (0)">Fit level <span>⌖</span></button></div>
+      <div class="zoom-controls" role="group" aria-label="Zoom controls"><button id="zoom-plus" aria-label="Zoom in">+</button><span id="zoom-readout">1×</span><button id="zoom-minus" aria-label="Zoom out">−</button><button id="up-button" aria-label="Go to parent level">↑</button></div>
+    </section>
+    <aside id="inspector" aria-label="Item details and accessible navigation">
+      <div class="aside-heading"><span class="eyebrow">FIELD NOTES</span><button id="close-details" aria-label="Close item details">×</button></div>
+      <div id="selection"><span class="index-number">01 / AN INVITATION TO LOOK CLOSER</span><h2>Big words.<br>Small worlds.</h2><p>Choose a folder. Scroll into its words. Find the files behind them.</p><p class="quiet">Click any region for its details. Double-click to step inside.</p></div>
+      <section class="browse"><button id="browse-toggle" aria-expanded="true">Browse this level <span>↓</span></button><div id="browse-list"></div></section>
+      <div id="search-results" hidden><div class="result-heading"><h3>Matching files</h3><button id="clear-search">Clear</button></div><div id="results-list"></div></div>
+      <details class="method"><summary>What this map knows</summary><p>Folders follows the selected tree. By type groups files by extension. Search matches file names and paths.</p><p>Words resolve into folders, files and actual document previews as you zoom. Area gives small files room; it does not measure importance or disk space.</p><p>Fractal stores its catalog and cached previews separately. Selected files are never launched or modified.</p><p id="provenance"></p></details>
+    </aside>
+  </main>
+  <footer class="experiment-bar"><span id="source-health" role="status">Choose a folder to begin</span><p id="render-stats" role="status">Ready to explore</p><span id="preview-health" role="status">Previews load as you approach</span><button id="notes-button">Details <span>↗</span></button></footer>
+  <dialog id="document-dialog" aria-label="Document inspection"><div class="document-header"><div><span class="eyebrow">DOCUMENT TABLE / CLOSE READING</span><h2 id="document-name">Document</h2></div><button id="document-close" aria-label="Close document">×</button></div><div id="document-viewer"></div><p id="document-message" role="status">Resolving preview…</p><div class="document-footer"><div class="document-controls"><button id="document-prev" aria-label="Previous page">←</button><label class="sr-only" for="document-page">Page</label><input id="document-page" type="number" min="1" value="1"><span id="document-pages">/ 1</span><button id="document-next" aria-label="Next page">→</button><button id="document-spread">Spread pages ↗</button></div><div class="document-controls"><button id="document-zoom-out" aria-label="Zoom document out">−</button><button id="document-fit">Fit page</button><button id="document-zoom-in" aria-label="Zoom document in">+</button></div><p id="document-provenance"></p></div></dialog>
+  <dialog id="about-dialog"><button class="dialog-close" data-close aria-label="Close">×</button><span class="eyebrow">FRACTAL</span><h2>Follow the words.</h2><p><strong>Choose folder</strong> opens a folder, drive or vault on this computer. Saved folders stay in your local collection list. Rescan when files change.</p><p><strong>Scroll or pinch</strong> toward a word. Smaller words appear inside it; keep going until you reach folders and files. Drag to pan. Click for details; double-click to step inside or inspect a document.</p><p><strong>Folders</strong> follows your tree. <strong>By type</strong> groups files by extension. Document tables reveal cached source previews; PDFs can spread into pages.</p><p>Your files stay on this computer. No account, cloud upload or remote rendering service.</p><p class="quiet">Keyboard: + / − zoom, arrows pan, 0 fits, Enter enters a selected folder, Escape goes up, Home returns to the collection. Browse this level provides equivalent buttons.</p></dialog>
+  <dialog id="dataset-dialog"><button class="dialog-close" data-close aria-label="Close">×</button><span class="eyebrow">A LANDSCAPE FOR ANY COLLECTION</span><h2>Bring another world.</h2><p>Open a JSON dataset with a folder tree and, optionally, a second content tree. Files stay in this browser; importing does not upload them.</p><label class="upload">Choose a JSON dataset<input id="dataset-file" type="file" accept=".json,application/json"></label><p id="import-message" role="status"></p><div class="dialog-actions"><button id="example-button">Try a small example ↗</button><a href="/example.json" download>Download the format ↓</a><button id="local-folder-button">Return to folder</button></div><p class="quiet">For an ordinary local folder, use Choose folder. JSON imports can supply descriptions, topics and preview images.</p></dialog>
+<dialog id="folder-dialog" aria-label="Choose a folder"><button id="folder-close" class="dialog-close" aria-label="Close folder chooser">×</button><span class="eyebrow">FRACTAL / LOCAL COLLECTIONS</span><h2 class="folder-heading">Every folder is a world.</h2><p class="folder-deck">Choose a folder, drive or vault. Its structure unfolds as you zoom. Everything stays on this computer.</p><form id="folder-form" class="folder-form"><label for="folder-path">Folder path</label><div class="path-entry"><input id="folder-path" placeholder="/path/to/a/folder" autocomplete="off" required><button id="folder-browse" type="button">Browse…</button></div><label class="hidden-option"><input id="include-hidden" type="checkbox">Include hidden files</label><button class="folder-submit" type="submit">Open folder ↗</button></form><p id="folder-message" role="status"></p><p id="saved-heading" hidden>SAVED FOLDERS</p><div id="saved-folders"></div><div class="folder-actions"><button id="folder-example">Explore an example ↗</button><button id="folder-import">Import a dataset</button></div></dialog>
+</body>
+</html>
